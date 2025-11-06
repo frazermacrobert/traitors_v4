@@ -146,7 +146,6 @@ function checkEnd(){
 }
 
 function doScenarioPhase() {
-  document.getElementById('actions').classList.remove('greyed-out');
   const container = document.getElementById('scenario');
   const sc = S.scenarios[Math.floor(S.rng() * S.scenarios.length)];
 
@@ -175,6 +174,7 @@ function doScenarioPhase() {
   const submitBtn = document.getElementById('answerBtn');
 
   submitBtn.onclick = () => {
+    document.getElementById('actions').classList.remove('greyed-out');
     if (submitBtn.disabled) return;
 
     const sel = document.querySelector('input[name=scopt]:checked');
