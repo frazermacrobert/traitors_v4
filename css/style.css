@@ -229,6 +229,12 @@ hr{ border:none; border-top:1px solid var(--rail); margin:12px 0; }
   backdrop-filter: blur(1px);
 }
 
+.greyed-out {
+  opacity: 0.5;
+  pointer-events: none;
+  background-color: #f0f0f0;
+}
+
 /* Round header animations */
 .round-title { display:inline-flex; align-items:baseline; gap:.4rem; }
 .round-title .round-label { text-transform:uppercase; font-weight:800; letter-spacing:.08em; color:var(--muted); }

@@ -146,6 +146,7 @@ function checkEnd(){
 }
 
 function doScenarioPhase() {
+  document.getElementById('actions').classList.remove('greyed-out');
   const container = document.getElementById('scenario');
   const sc = S.scenarios[Math.floor(S.rng() * S.scenarios.length)];
 
@@ -324,6 +325,7 @@ function renderTally(tally){
 }
 
 function handlePlayerVote(targetId){
+  document.getElementById('actions').classList.add('greyed-out');
   document.querySelectorAll('.vote-bubble').forEach(v=>v.textContent='0');
   const feed=document.getElementById('voteFeed'); feed.innerHTML='';
   const tally={};
