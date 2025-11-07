@@ -152,7 +152,6 @@ function checkEnd(){
 
 function doScenarioPhase() {
   const container = document.getElementById('scenario');
-  document.getElementById('actions').classList.remove('is-disabled');
 
   // Anti-repetition: if we're out, reshuffle and start over
   if (S.availableScenarios.length === 0) {
@@ -206,6 +205,7 @@ function doScenarioPhase() {
     const pick = sel.value;
 
     if (pick === sc.correct) {
+      document.getElementById('actions').classList.remove('is-disabled');
       logLine(`Scenario answered correctly.`);
       if (S.analysis) logLine(`Analysis: ${sc.rationale_correct}`);
       doActionsPhase();
