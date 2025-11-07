@@ -46,7 +46,7 @@ function defaultBehaviour(d){
 }
 
 const S={
-  allEmployees:[],actions:[],scenarios:[],elimMsgs:{},
+  allEmployees:[],actions:[],scenarios:[],availableScenarios:[],elimMsgs:{},
   players:[],round:0,rng:Math.random,youId:null,traitors:new Set(),
   analysis:true,difficulty:"Medium",numTraitors:3,
   log:[], suspicion:{}, alive:new Set(), eliminated:new Set(), elimReason:{},
@@ -110,6 +110,10 @@ function startGame(){
 
   S.players.forEach(p=>S.suspicion[p.id]=0);
 
+  // set up scenario pool
+  S.availableScenarios = [...S.scenarios];
+  seededShuffle(S.availableScenarios, S.rng); // shuffle once at the start
+
   logLine(`Game started. Traitors assigned. Difficulty: ${S.difficulty}.`);
   renderAll();
   nextRound();
@@ -147,7 +151,17 @@ function checkEnd(){
 
 function doScenarioPhase() {
   const container = document.getElementById('scenario');
-  const sc = S.scenarios[Math.floor(S.rng() * S.scenarios.length)];
+
+  // Anti-repetition: if we're out, reshuffle and start over
+  if (S.availableScenarios.length === 0) {
+    if (S.scenarios.length > 0) {
+      logLine("Reshuffling scenarios for a new round.");
+      S.availableScenarios = [...S.scenarios];
+      seededShuffle(S.availableScenarios, S.rng);
+    }
+  }
+
+  const sc = S.availableScenarios.pop();
 
   if (!sc) {
     container.innerHTML = `<h2>Scenario</h2><div class="note">No scenarios available.</div>`;
@@ -174,7 +188,6 @@ function doScenarioPhase() {
   const submitBtn = document.getElementById('answerBtn');
 
   submitBtn.onclick = () => {
-    document.getElementById('actions').classList.remove('greyed-out');
     if (submitBtn.disabled) return;
 
     const sel = document.querySelector('input[name=scopt]:checked');
@@ -199,19 +212,13 @@ function doScenarioPhase() {
       if (S.analysis) logLine(`Analysis: ${sc.rationale_wrong}`);
 
       // Create an overlay message explaining why
-      const you = S.players.find(p => p.id === S.youId);
-      const sadAvatarUrl = you ? you.avatarSad : '';
-
       const explainDiv = document.createElement('div');
       explainDiv.className = 'explain-overlay';
       explainDiv.innerHTML = `
-        <div class="explain-dialog with-character">
-          <img src="${sadAvatarUrl}" alt="Your character, looking sad" class="explain-character-avatar">
-          <div class="explain-text">
-            <h3>Why that was unsafe</h3>
-            <p>${sc.rationale_wrong}</p>
-            <button id="continueBtn" class="btn">Continue</button>
-          </div>
+        <div class="explain-dialog">
+          <h3>Why that was unsafe</h3>
+          <p>${sc.rationale_wrong}</p>
+          <button id="continueBtn" class="btn">Continue</button>
         </div>
       `;
       document.body.appendChild(explainDiv);
@@ -331,7 +338,6 @@ function renderTally(tally){
 }
 
 function handlePlayerVote(targetId){
-  document.getElementById('actions').classList.add('greyed-out');
   document.querySelectorAll('.vote-bubble').forEach(v=>v.textContent='0');
   const feed=document.getElementById('voteFeed'); feed.innerHTML='';
   const tally={};
