@@ -117,6 +117,7 @@ function startGame(){
   logLine(`Game started. Traitors assigned. Difficulty: ${S.difficulty}.`);
   renderAll();
   nextRound();
+  document.body.dataset.gameReady = 'true';
 }
 
 function nextRound(){
@@ -151,6 +152,7 @@ function checkEnd(){
 
 function doScenarioPhase() {
   const container = document.getElementById('scenario');
+  document.getElementById('actions').classList.remove('is-disabled');
 
   // Anti-repetition: if we're out, reshuffle and start over
   if (S.availableScenarios.length === 0) {
@@ -161,7 +163,8 @@ function doScenarioPhase() {
     }
   }
 
-  const sc = S.availableScenarios.pop();
+  S.currentScenario = S.availableScenarios.pop();
+  const sc = S.currentScenario;
 
   if (!sc) {
     container.innerHTML = `<h2>Scenario</h2><div class="note">No scenarios available.</div>`;
@@ -344,6 +347,7 @@ function renderTally(tally){
 }
 
 function handlePlayerVote(targetId){
+  document.getElementById('actions').classList.add('is-disabled');
   document.querySelectorAll('.vote-bubble').forEach(v=>v.textContent='0');
   const feed=document.getElementById('voteFeed'); feed.innerHTML='';
   const tally={};
