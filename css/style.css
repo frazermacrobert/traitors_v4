@@ -188,38 +188,6 @@ hr{ border:none; border-top:1px solid var(--rail); margin:12px 0; }
   box-shadow:0 20px 60px rgba(0,0,0,.30);
   animation: pop-in .25s ease-out;
 }
-
-/* Styles for the new dialog with the character avatar */
-.explain-dialog.with-character {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  max-width: 560px; /* Wider to accommodate the image */
-  text-align: left;
-}
-
-.explain-character-avatar {
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 12px;
-  border: 1px solid var(--rail);
-  flex-shrink: 0; /* Prevent image from shrinking */
-}
-
-.explain-text {
-  display: flex;
-  flex-direction: column;
-}
-
-.explain-text h3 {
-  margin-top: 0;
-}
-
-.explain-text .btn {
-  align-self: flex-end; /* Align button to the right */
-  margin-top: 12px;
-}
 @keyframes pop-in{ from{ transform:scale(.98); opacity:0; } to{ transform:scale(1); opacity:1; } }
 
 /* Buttons & micro-interactions */
@@ -259,12 +227,6 @@ hr{ border:none; border-top:1px solid var(--rail); margin:12px 0; }
   font-weight: 700;
   letter-spacing: .02em;
   backdrop-filter: blur(1px);
-}
-
-.greyed-out {
-  opacity: 0.5;
-  pointer-events: none;
-  background-color: #f0f0f0;
 }
 
 /* Round header animations */
