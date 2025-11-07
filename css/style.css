@@ -257,3 +257,43 @@ hr{ border:none; border-top:1px solid var(--rail); margin:12px 0; }
 .round-num-flash { animation: numFlash .9s ease; }
 @keyframes roundPulse { 0%{transform:scale(1);color:var(--muted)}40%{transform:scale(1.12);color:var(--red)}100%{transform:scale(1);color:var(--muted)}}
 @keyframes numFlash { 0%{color:var(--red);transform:translateY(-1px)}100%{color:var(--ink);transform:translateY(0)}}
+
+/* ---------- End Game Modal ---------- */
+.end-game-modal {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+}
+.end-game-modal .avatars {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.end-game-modal .avatars img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--rail);
+  box-shadow: 0 4px 12px rgba(0,0,0,.1);
+}
+.end-game-modal .message {
+  flex: 1;
+}
+.end-game-modal .message h3 {
+  margin-top: 0;
+  font-size: 16px;
+  color: var(--muted);
+}
+.end-game-modal .message p {
+  font-size: 18px;
+  font-style: italic;
+  color: var(--ink);
+  margin: 8px 0;
+}
+.end-game-modal .footer {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+}

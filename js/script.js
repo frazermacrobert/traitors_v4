@@ -46,7 +46,7 @@ function defaultBehaviour(d){
 }
 
 const S={
-  allEmployees:[],actions:[],scenarios:[],availableScenarios:[],elimMsgs:{},
+  allEmployees:[],actions:[],scenarios:[],availableScenarios:[],elimMsgs:{},endGameMessages:[],
   players:[],round:0,rng:Math.random,youId:null,traitors:new Set(),
   analysis:true,difficulty:"Medium",numTraitors:3,
   log:[], suspicion:{}, alive:new Set(), eliminated:new Set(), elimReason:{},
@@ -57,11 +57,12 @@ const S={
 };
 
 async function loadData(){
-  const [emps,acts,scens,elim]=await Promise.all([
+  const [emps,acts,scens,elim,endGameMessages]=await Promise.all([
     fetch('data/employees.json').then(r=>r.json()),
     fetch('data/actions.json').then(r=>r.json()),
     fetch('data/scenarios.json').then(r=>r.json()),
     fetch('data/elimination_msgs.json').then(r=>r.json()),
+    fetch('data/end_game_messages.json').then(r=>r.json()),
   ]);
   S.allEmployees=emps; 
   S.actions=acts; 
@@ -71,6 +72,7 @@ async function loadData(){
     alert("No valid scenarios found. Please check data/scenarios.json formatting.");
   }
   S.elimMsgs=elim;
+  S.endGameMessages=endGameMessages;
 
   // validate action buckets
   const VALID=new Set(["safe","risky_innocent","traitor_sabotage","decoy","red_herring"]);
@@ -502,18 +504,47 @@ function openLogModal(){
 }
 document.getElementById('closeLog').onclick=()=>document.getElementById('logModal').classList.remove('open');
 
-function announce(msg){
-  const scenario=document.getElementById('scenario');
-  // Traitor list for finale
-  const traitorNames = S.players.filter(p => S.traitors.has(p.id)).map(p => p.name);
-  const traitorList = traitorNames.length ? `<br><br><strong>The traitors were:</strong> ${traitorNames.join(', ')}.` : '';
+function announce(msg) {
+  const scenario = document.getElementById('scenario');
+  const isWin = msg.includes('win');
+  const you = S.players.find(p => p.id === S.youId);
 
- scenario.innerHTML = `<h2>Outcome</h2>
-  <div>${msg}${traitorList}</div>
-  <div class="footer" style="display:flex;justify-content:flex-end">
-    <button class="btn" onclick="location.reload()">Play Again</button>
-  </div>`;
-} 
+  let character;
+  const alivePlayers = S.players.filter(p => S.alive.has(p.id));
+
+  if (isWin) {
+    const innocentSurvivors = alivePlayers.filter(p => !S.traitors.has(p.id) && p.id !== S.youId);
+    character = pickRandom(innocentSurvivors.length > 0 ? innocentSurvivors : alivePlayers, S.rng);
+  } else {
+    const traitorSurvivors = alivePlayers.filter(p => S.traitors.has(p.id));
+    character = pickRandom(traitorSurvivors.length > 0 ? traitorSurvivors : alivePlayers, S.rng);
+  }
+
+  const messageData = S.endGameMessages.find(m => m.id === character.id);
+  const message = messageData ? (isWin ? messageData.win : messageData.lose) : msg;
+
+  const playerAvatar = isWin ? you.avatar : you.avatarSad;
+  const characterAvatar = S.traitors.has(character.id) ? character.avatarTraitor : character.avatar;
+
+  const traitorNames = S.players.filter(p => S.traitors.has(p.id)).map(p => p.name);
+  const traitorList = traitorNames.length ? `<div class="note" style="margin-top:12px;"><strong>The traitors were:</strong> ${traitorNames.join(', ')}.</div>` : '';
+
+  scenario.innerHTML = `
+    <div class="end-game-modal">
+      <div class="avatars">
+        <img src="${playerAvatar}" alt="Your avatar">
+        <img src="${characterAvatar}" alt="${character.name}'s avatar">
+      </div>
+      <div class="message">
+        <h3>${character.name} says:</h3>
+        <p>"${message}"</p>
+        ${traitorList}
+        <div class="footer">
+          <button class="btn" onclick="location.reload()">Play Again</button>
+        </div>
+      </div>
+    </div>`;
+}
 
 function renderAll(){ renderTopbar(); }
 
