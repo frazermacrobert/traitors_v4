@@ -212,13 +212,19 @@ function doScenarioPhase() {
       if (S.analysis) logLine(`Analysis: ${sc.rationale_wrong}`);
 
       // Create an overlay message explaining why
+      const you = S.players.find(p => p.id === S.youId);
+      const sadAvatarUrl = you ? you.avatarSad : '';
+
       const explainDiv = document.createElement('div');
       explainDiv.className = 'explain-overlay';
       explainDiv.innerHTML = `
-        <div class="explain-dialog">
-          <h3>Why that was unsafe</h3>
-          <p>${sc.rationale_wrong}</p>
-          <button id="continueBtn" class="btn">Continue</button>
+        <div class="explain-dialog with-character">
+          <img src="${sadAvatarUrl}" alt="Your character, looking sad" class="explain-character-avatar">
+          <div class="explain-text">
+            <h3>Why that was unsafe</h3>
+            <p>${sc.rationale_wrong}</p>
+            <button id="continueBtn" class="btn">Continue</button>
+          </div>
         </div>
       `;
       document.body.appendChild(explainDiv);

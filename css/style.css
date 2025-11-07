@@ -229,6 +229,26 @@ hr{ border:none; border-top:1px solid var(--rail); margin:12px 0; }
   backdrop-filter: blur(1px);
 }
 
+.explain-dialog.with-character {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  max-width: 560px; /* Wider for avatar */
+}
+.explain-character-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--rail);
+}
+.explain-text {
+  flex: 1;
+}
+.explain-text button {
+  margin-top: 12px;
+}
+
 /* Round header animations */
 .round-title { display:inline-flex; align-items:baseline; gap:.4rem; }
 .round-title .round-label { text-transform:uppercase; font-weight:800; letter-spacing:.08em; color:var(--muted); }
