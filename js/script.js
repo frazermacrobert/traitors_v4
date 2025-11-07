@@ -239,7 +239,8 @@ function doScenarioPhase() {
         explainDiv.remove();
         eliminate(S.youId, false, 'VotedOut');
         renderAll();
-        checkEnd();
+        revealTraitors();
+        announce(`Your mistake led to your elimination. You lose.`);
       };
     }
   };
