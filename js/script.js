@@ -827,6 +827,15 @@ window.addEventListener("DOMContentLoaded", async () => {
   const playerSelect = document.getElementById("playerSelect");
   const characterImage = document.getElementById("character-preview-image");
 
+  // Set a default character on load
+  playerSelect.value = "pete-design-1";
+
+  // Manually trigger change to update preview image
+  const defaultPlayer = S.allEmployees.find(e => e.id === playerSelect.value);
+  if (defaultPlayer) {
+    characterImage.src = `assets/pngs/${defaultPlayer.id}.png`;
+  }
+
   document.getElementById("selectCharacterBtn").onclick = () => {
     characterModal.classList.add("open");
   };
