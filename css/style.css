@@ -28,6 +28,10 @@ body{
   position: relative;             /* anchor for ::before grain */
 }
 
+body[data-game-ready='true'] {
+    background: url('../assets/bg_office.jpg') center center / cover no-repeat;
+}
+
 body::before{
   content:"";
   position: fixed;
