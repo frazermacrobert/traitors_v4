@@ -45,46 +45,88 @@
 
 <!-- Start Modal -->
 <div class="modal open" id="startModal" role="dialog" aria-modal="true">
-  <div class="dialog">
-    <h2 style="margin-top:0">New Game</h2>
-
-    <div class="instructions" style="margin-bottom:12px;">
-      <h3 style="margin:4px 0;">🕹️ How to Play</h3>
-      <p style="font-size:14px; line-height:1.4; color:var(--muted);">
-        Each day, you’ll face a workplace scenario.<br>
-        1️⃣ <strong>Pick the safest choice</strong> — avoid risky behaviour.<br>
-        2️⃣ Unsafe behaviour means instant <strong>elimination</strong>.<br>
-        3️⃣ Stay safe to see what everyone else did.<br>
-        4️⃣ <strong>Vote off the player you suspect</strong> of sabotage.<br>
-        5️⃣ Keep going until all traitors are gone (win) or they take over (lose).<br>
-        <em>If votes tie, the group decides automatically.</em>
-      </p>
-    </div>
-
-    <div class="row" style="display:flex;gap:10px;flex-wrap:wrap">
-      <label>Choose your character<br><select id="playerSelect"></select></label>
-      <label>Difficulty<br>
-        <select id="difficulty">
-          <option>Easy</option>
-          <option selected>Medium</option>
-          <option>Hard</option>
-        </select>
-      </label>
-      <label>Traitors<br><input id="numTraitors" type="number" min="1" max="5" value="3"></label>
-      <label>Analysis Mode<br>
-        <select id="analysisMode">
-          <option value="true" selected>On</option>
-          <option value="false">Off</option>
-        </select>
-      </label>
-    </div>
-    <hr>
-    <div class="footer" style="display:flex;justify-content:space-between;align-items:center">
-      <div class="note">10 total players (you + 9 bots). Traitors are assigned from bots.</div>
-      <button id="startBtn" class="btn">Start</button>
-    </div>
+  <div class="dialog main-menu">
+    <button id="selectCharacterBtn" class="btn">Select Character</button>
+    <button id="startGameBtn" class="btn">Start Game</button>
+    <button id="optionsBtn" class="btn">Options</button>
+    <button id="howToPlayBtn" class="btn">How to Play</button>
   </div>
 </div>
+
+<!-- Character Selection Modal -->
+<div class="modal" id="characterModal" role="dialog" aria-modal="true">
+    <div class="dialog">
+        <h2 style="margin-top:0">Select Character</h2>
+        <div class="character-selection">
+            <div class="character-list">
+                <select id="playerSelect" size="10"></select>
+            </div>
+            <div class="character-preview">
+                    <img id="character-preview-image" src="assets/pngs/al-consultant-1.png" alt="Selected character preview">
+            </div>
+        </div>
+        <div class="footer" style="display:flex;justify-content:flex-end;align-items:center">
+            <button id="confirmCharacterBtn" class="btn">Confirm Selection</button>
+        </div>
+    </div>
+</div>
+
+<!-- Options Modal -->
+<div class="modal" id="optionsModal" role="dialog" aria-modal="true">
+    <div class="dialog">
+        <h2 style="margin-top:0">Options</h2>
+        <div class="row" style="display:flex;gap:10px;flex-wrap:wrap">
+            <label>Difficulty<br>
+                <select id="difficulty">
+                    <option>Easy</option>
+                    <option selected>Medium</option>
+                    <option>Hard</option>
+                </select>
+            </label>
+            <label>Traitors<br>
+                <select id="numTraitors">
+                    <option>1</option>
+                    <option>2</option>
+                    <option selected>3</option>
+                    <option>4</option>
+                </select>
+            </label>
+            <label>Analysis Mode<br>
+                <select id="analysisMode">
+                    <option value="true" selected>On</option>
+                    <option value="false">Off</option>
+                </select>
+                <div class="note">Turn this on to help you learn.</div>
+            </label>
+        </div>
+        <hr>
+        <div class="footer" style="display:flex;justify-content:flex-end;align-items:center">
+            <button id="confirmOptionsBtn" class="btn">Confirm Settings</button>
+        </div>
+    </div>
+</div>
+
+<!-- How to Play Modal -->
+<div class="modal" id="howToPlayModal" role="dialog" aria-modal="true">
+    <div class="dialog">
+        <h2 style="margin-top:0">How to Play</h2>
+        <div class="instructions" style="margin-bottom:12px;">
+            <p style="font-size:14px; line-height:1.4; color:var(--muted);">
+                Each day, you’ll face a workplace scenario.<br>
+                1️⃣ <strong>Pick the safest choice</strong> — avoid risky behaviour.<br>
+                2️⃣ Unsafe behaviour means instant <strong>elimination</strong>.<br>
+                3️⃣ Stay safe to see what everyone else did.<br>
+                4️⃣ <strong>Vote off the player you suspect</strong> of sabotage.<br>
+                5️⃣ Keep going until all traitors are gone (win) or they take over (lose).<br>
+                <em>If votes tie, the group decides automatically.</em>
+            </p>
+        </div>
+        <div class="footer" style="display:flex;justify-content:flex-end;align-items:center">
+            <button id="closeRulesBtn" class="btn">Close Rules</button>
+        </div>
+    </div>
+</div>
+
 
 <!-- Fullscreen background for the start screen; fades out when #startModal closes -->
 <div class="start-bg" aria-hidden="true"></div>

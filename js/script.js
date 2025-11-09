@@ -554,16 +554,23 @@ document.getElementById('restartBtn').onclick=()=>location.reload();
 window.addEventListener('DOMContentLoaded', async ()=>{
   await loadData();
   const startModal = document.getElementById('startModal');
+  const characterModal = document.getElementById('characterModal');
+  const optionsModal = document.getElementById('optionsModal');
+  const howToPlayModal = document.getElementById('howToPlayModal');
+  const playerSelect = document.getElementById('playerSelect');
+  const characterImage = document.getElementById('character-preview-image');
 
-  document.getElementById('startBtn').onclick = () => {
-    const you = document.getElementById('playerSelect').value;
+  document.getElementById('selectCharacterBtn').onclick = () => {
+    characterModal.classList.add('open');
+  };
+
+  document.getElementById('startGameBtn').onclick = () => {
+    const you = playerSelect.value;
     const diff = document.getElementById('difficulty').value;
     const analysis = document.getElementById('analysisMode').value === 'true';
     const numT = parseInt(document.getElementById('numTraitors').value, 10) || 3;
 
-    // No seed field: just use a random seed behind the scenes
     S.rng = mulberry32(Math.floor(Math.random() * 1e9));
-
     S.youId = you;
     S.difficulty = diff;
     S.analysis = analysis;
@@ -571,6 +578,34 @@ window.addEventListener('DOMContentLoaded', async ()=>{
 
     startModal.classList.remove('open');
     startGame();
+  };
+
+  document.getElementById('optionsBtn').onclick = () => {
+    optionsModal.classList.add('open');
+  };
+
+  document.getElementById('howToPlayBtn').onclick = () => {
+    howToPlayModal.classList.add('open');
+  };
+
+  document.getElementById('confirmCharacterBtn').onclick = () => {
+    characterModal.classList.remove('open');
+  };
+
+  document.getElementById('confirmOptionsBtn').onclick = () => {
+    optionsModal.classList.remove('open');
+  };
+
+  document.getElementById('closeRulesBtn').onclick = () => {
+    howToPlayModal.classList.remove('open');
+  };
+
+  playerSelect.onchange = (event) => {
+    const selectedPlayerId = event.target.value;
+    const selectedPlayer = S.allEmployees.find(e => e.id === selectedPlayerId);
+    if (selectedPlayer) {
+        characterImage.src = `assets/pngs/${selectedPlayer.id}.png`;
+    }
   };
 
   window.addEventListener('keydown', (e) => {
