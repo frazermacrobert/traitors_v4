@@ -313,11 +313,15 @@ function doScenarioPhase() {
         </label>`;
       })
       .join("")}
-    <div class="footer" style="display:flex;justify-content:flex-end;align-items:center;margin-top:8px">
+    <div class="scenario-actions" style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;">
+      <button id="openLogBtn" class="btn secondary">Open Game Log</button>
+      <button id="restartBtn" class="btn secondary">Restart game</button>
       <button id="answerBtn" class="btn">Submit</button>
     </div>
   `;
 
+  document.getElementById("openLogBtn").onclick = openLogModal;
+  document.getElementById("restartBtn").onclick = () => location.reload();
   const submitBtn = document.getElementById("answerBtn");
 
   submitBtn.onclick = () => {
@@ -713,11 +717,7 @@ function renderRoundInfo() {
   el.innerHTML = `
     <h2>Round ${S.round}</h2>
     <div class="note">Alive: ${S.alive.size} · Traitors unknown · Keep your wits about you.</div>
-    <div style="margin-top:8px">
-      <button class="btn secondary" id="openLogTop" type="button">Open Game Log</button>
-    </div>
   `;
-  document.getElementById("openLogTop").onclick = openLogModal;
 }
 
 function renderTopbar() {
@@ -814,8 +814,6 @@ function announce(msg) {
 function renderAll() {
   renderTopbar();
 }
-
-document.getElementById("restartBtn").onclick = () => location.reload();
 
 window.addEventListener("DOMContentLoaded", async () => {
   await loadData();
