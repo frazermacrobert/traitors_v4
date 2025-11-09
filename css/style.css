@@ -134,6 +134,31 @@ body::before{
 }
 .modal.open{ display:flex; }
 
+.main-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.character-selection {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.character-list {
+    flex: 1;
+}
+
+.character-preview img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--rail);
+}
+
 /* Tidy, centered dialog — compact and centered */
 .dialog{
   background:#fff;
