@@ -134,7 +134,7 @@ body::before{
 }
 .modal.open{ display:flex; }
 
-.main-menu {
+#startModal .dialog {
   display: flex;
   flex-direction: column;
   gap: 20px; /* Increased gap for better spacing */
