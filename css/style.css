@@ -349,8 +349,29 @@ hr{ border:none; border-top:1px solid var(--rail); margin:12px 0; }
   color: var(--ink);
   margin: 8px 0;
 }
-.end-game-modal .footer {
-  margin-top: 16px;
-  display: flex;
-  justify-content: flex-end;
+.scenario-actions {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  align-items: center;
+}
+#openLogBtn {
+  justify-self: start;
+}
+#restartBtn {
+  justify-self: center;
+}
+#answerBtn {
+  justify-self: end;
+}
+/* Responsive stacking for smaller screens */
+@media (max-width: 600px) {
+  .scenario-actions {
+    grid-template-columns: 1fr;
+    justify-items: stretch; /* Stretch buttons to full width */
+  }
+  #openLogBtn, #restartBtn, #answerBtn {
+    justify-self: stretch; /* Ensure they take full width */
+    text-align: center;
+  }
 }
