@@ -135,10 +135,43 @@ body::before{
 .modal.open{ display:flex; }
 
 .main-menu {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Increased gap for better spacing */
+  align-items: center;
+  justify-content: center; /* Center content vertically */
+  text-align: center;
+  padding: 40px; /* Add padding */
+  background: transparent; /* No background */
+  box-shadow: none; /* No shadow */
+  border: none; /* No border */
+}
+
+.main-logo {
+  max-width: 80%; /* Responsive width */
+  margin-bottom: 20px; /* Space below the logo */
+}
+
+.btn-main {
+  padding: 15px 30px; /* Larger button */
+  font-size: 1.2em; /* Larger text */
+  background-color: #f44336; /* Pastel red */
+  color: white;
+  border: 2px solid white;
+  box-shadow: 0 0 10px white; /* White glow */
+}
+
+.button-row {
+  display: flex;
+  gap: 10px; /* Space between buttons */
+  justify-content: center; /* Center buttons in the row */
+  position: absolute; /* Position at the bottom */
+  bottom: 20px; /* 20px from the bottom */
+}
+
+.btn-sub {
+  padding: 8px 15px; /* Smaller buttons */
+  font-size: 0.9em; /* Smaller text */
 }
 
 .character-selection {
