@@ -816,78 +816,58 @@ function renderAll() {
 }
 
 window.addEventListener("DOMContentLoaded", async () => {
-  await loadData();
+    await loadData();
 
-  const startModal = document.getElementById("startModal");
-  const characterModal = document.getElementById("characterModal");
-  const optionsModal = document.getElementById("optionsModal");
-  const howToPlayModal = document.getElementById("howToPlayModal");
-  const playerSelect = document.getElementById("playerSelect");
-  const characterImage = document.getElementById("character-preview-image");
+    const startModal = document.getElementById("startModal");
+    const optionsModal = document.getElementById("optionsModal");
+    const howToPlayModal = document.getElementById("howToPlayModal");
+    const infoModal = document.getElementById("infoModal");
+    const playerSelect = document.getElementById("playerSelect");
+    const characterImage = document.getElementById("character-preview-image");
 
-  // Set a default character on load
-  playerSelect.value = "pete-design-1";
-
-  // Manually trigger change to update preview image
-  const defaultPlayer = S.allEmployees.find(e => e.id === playerSelect.value);
-  if (defaultPlayer) {
-    characterImage.src = `assets/pngs/${defaultPlayer.id}.png`;
-  }
-
-  document.getElementById("selectCharacterBtn").onclick = () => {
-    characterModal.classList.add("open");
-  };
-
-  document.getElementById("startGameBtn").onclick = () => {
-    const you = playerSelect.value;
-    const diff = document.getElementById("difficulty").value;
-    const analysis = document.getElementById("analysisMode").value === "true";
-    const numT = parseInt(document.getElementById("numTraitors").value, 10) || 3;
-
-    S.rng = mulberry32(Math.floor(Math.random() * 1e9));
-    S.youId = you;
-    S.difficulty = diff;
-    S.analysis = analysis;
-    S.numTraitors = numT;
-
-    startModal.classList.remove("open");
-    startGame();
-  };
-
-  document.getElementById("optionsBtn").onclick = () => {
-    optionsModal.classList.add("open");
-  };
-
-  document.getElementById("howToPlayBtn").onclick = () => {
-    howToPlayModal.classList.add("open");
-  };
-
-  document.getElementById("confirmCharacterBtn").onclick = () => {
-    characterModal.classList.remove("open");
-  };
-
-  document.getElementById("confirmOptionsBtn").onclick = () => {
-    optionsModal.classList.remove("open");
-  };
-
-  document.getElementById("closeRulesBtn").onclick = () => {
-    howToPlayModal.classList.remove("open");
-  };
-
-  playerSelect.onchange = (event) => {
-    const selectedPlayerId = event.target.value;
-    const selectedPlayer = S.allEmployees.find((e) => e.id === selectedPlayerId);
-    if (selectedPlayer) {
-      characterImage.src = `assets/pngs/${selectedPlayer.id}.png`;
+    // Set a default character on load
+    playerSelect.value = "pete-design-1";
+    const defaultPlayer = S.allEmployees.find(e => e.id === playerSelect.value);
+    if (defaultPlayer) {
+        characterImage.src = `assets/pngs/${defaultPlayer.id}.png`;
     }
-  };
 
-  window.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-      const logModal = document.getElementById("logModal");
-      if (logModal) logModal.classList.remove("open");
-    }
-  });
+    document.getElementById("startGameBtn").onclick = () => {
+        const you = playerSelect.value;
+        const diff = document.getElementById("difficulty").value;
+        const analysis = document.getElementById("analysisMode").value === "true";
+        const numT = parseInt(document.getElementById("numTraitors").value, 10) || 3;
+
+        S.rng = mulberry32(Math.floor(Math.random() * 1e9));
+        S.youId = you;
+        S.difficulty = diff;
+        S.analysis = analysis;
+        S.numTraitors = numT;
+
+        startModal.classList.remove("open");
+        startGame();
+    };
+
+    document.getElementById("optionsBtn").onclick = () => optionsModal.classList.add("open");
+    document.getElementById("howToPlayBtn").onclick = () => howToPlayModal.classList.add("open");
+    document.getElementById("infoBtn").onclick = () => infoModal.classList.add("open");
+
+    document.getElementById("confirmOptionsBtn").onclick = () => optionsModal.classList.remove("open");
+    document.getElementById("closeRulesBtn").onclick = () => howToPlayModal.classList.remove("open");
+    document.getElementById("closeInfoBtn").onclick = () => infoModal.classList.remove("open");
+
+    playerSelect.onchange = (event) => {
+        const selectedPlayer = S.allEmployees.find(e => e.id === event.target.value);
+        if (selectedPlayer) {
+            characterImage.src = `assets/pngs/${selectedPlayer.id}.png`;
+        }
+    };
+
+    window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+            [startModal, optionsModal, howToPlayModal, infoModal].forEach(modal => modal.classList.remove("open"));
+        }
+    });
 });
 
 // ---------- Reveal traitors (outline + optional image swap) ----------
