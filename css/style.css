@@ -430,3 +430,70 @@ hr{ border:none; border-top:1px solid var(--rail); margin:12px 0; }
     text-align: center;
   }
 }
+
+/* === Start menu layout fix: center two columns under the logo === */
+#startModal .dialog.main-menu {
+  /* stop the flex column from your earlier rule */
+  display: grid;
+  grid-template-columns: 380px 260px;  /* preview left, buttons right */
+  justify-content: center;             /* center both columns as a unit */
+  column-gap: 48px;
+  row-gap: 20px;
+  align-items: start;
+  padding-bottom: 50px;
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  overflow: visible;                    /* no surprise inner scrollbars */
+  max-width: 980px;
+  margin: 6vh auto;                     /* center the dialog block */
+}
+
+/* Make the logo sit above both columns and stay centered */
+#startModal .dialog.main-menu .main-logo {
+  grid-column: 1 / -1;
+  justify-self: center;
+  max-width: 500px;
+  margin-bottom: .5rem;
+}
+
+/* Left column block stays tidy */
+#startModal .dialog.main-menu .character-display-container {
+  justify-self: center;
+  gap: 10px;
+}
+
+/* Right column: consistent button width and no shove to the right */
+#startModal .dialog.main-menu .main-actions {
+  justify-self: start;
+  display: grid;
+  gap: 12px;
+  width: 260px;
+  margin-left: 0;                       /* overrides the 40px push */
+}
+
+/* Label legibility on dark background */
+.custom-select-wrapper label {
+  display: block;
+  margin-bottom: 6px;
+  color: #fff;
+  font-weight: 600;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0,0,0,.35);
+}
+
+/* Slightly larger select to match button column width */
+.custom-select-wrapper { width: 260px; }
+
+/* Mobile: stack neatly */
+@media (max-width: 900px) {
+  #startModal .dialog.main-menu {
+    grid-template-columns: 1fr;
+    justify-content: center;
+    max-width: min(92vw, 560px);
+  }
+  #startModal .dialog.main-menu .main-actions {
+    width: min(320px, 90vw);
+    justify-self: center;
+  }
+}
