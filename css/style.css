@@ -431,25 +431,24 @@ hr{ border:none; border-top:1px solid var(--rail); margin:12px 0; }
   }
 }
 
-/* === Start menu layout fix: center two columns under the logo === */
+/* === Start menu layout fix: centered two-column layout under the logo === */
 #startModal .dialog.main-menu {
-  /* stop the flex column from your earlier rule */
-  display: grid;
-  grid-template-columns: 380px 260px;  /* preview left, buttons right */
-  justify-content: center;             /* center both columns as a unit */
-  column-gap: 48px;
+  display: grid;                       /* replace the old flex column */
+  grid-template-columns: 420px 300px;  /* preview left, buttons right */
+  justify-content: center;             /* center the pair as a unit */
+  align-items: center;                  /* vertical alignment between columns */
+  column-gap: 40px;
   row-gap: 20px;
-  align-items: start;
   padding-bottom: 50px;
   background: transparent;
   box-shadow: none;
   border: none;
-  overflow: visible;                    /* no surprise inner scrollbars */
+  overflow: visible;
   max-width: 980px;
-  margin: 6vh auto;                     /* center the dialog block */
+  margin: 6vh auto;
 }
 
-/* Make the logo sit above both columns and stay centered */
+/* Logo spans both columns and stays centered */
 #startModal .dialog.main-menu .main-logo {
   grid-column: 1 / -1;
   justify-self: center;
@@ -457,19 +456,20 @@ hr{ border:none; border-top:1px solid var(--rail); margin:12px 0; }
   margin-bottom: .5rem;
 }
 
-/* Left column block stays tidy */
+/* Left column: hug the left edge so the pair feels balanced */
 #startModal .dialog.main-menu .character-display-container {
-  justify-self: center;
+  justify-self: start;
   gap: 10px;
 }
 
-/* Right column: consistent button width and no shove to the right */
+/* Right column: tidy, consistent width and no stray margins */
 #startModal .dialog.main-menu .main-actions {
   justify-self: start;
+  align-self: center;
   display: grid;
   gap: 12px;
-  width: 260px;
-  margin-left: 0;                       /* overrides the 40px push */
+  width: 300px;
+  margin-left: 0;
 }
 
 /* Label legibility on dark background */
@@ -482,7 +482,7 @@ hr{ border:none; border-top:1px solid var(--rail); margin:12px 0; }
   text-shadow: 0 1px 2px rgba(0,0,0,.35);
 }
 
-/* Slightly larger select to match button column width */
+/* Keep the select close to the label width */
 .custom-select-wrapper { width: 260px; }
 
 /* Mobile: stack neatly */
@@ -490,6 +490,7 @@ hr{ border:none; border-top:1px solid var(--rail); margin:12px 0; }
   #startModal .dialog.main-menu {
     grid-template-columns: 1fr;
     justify-content: center;
+    align-items: start;
     max-width: min(92vw, 560px);
   }
   #startModal .dialog.main-menu .main-actions {
