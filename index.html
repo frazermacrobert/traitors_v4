@@ -11,6 +11,80 @@
   <meta name="theme-color" content="#cc1f2a">
 
   <link rel="stylesheet" href="css/style.css">
+
+  <!-- Minimal fixes for layout and the stray scrollbar -->
+  <style>
+    html, body { height: 100%; }
+    body { margin: 0; overflow-x: hidden; }
+
+    /* Start screen layout */
+    .main-menu { padding: 24px 24px 32px; }
+    .main-menu .main-logo {
+      display: block;
+      margin: 0 auto 12px auto;
+      max-width: 520px;
+      width: min(92vw, 520px);
+      height: auto;
+    }
+    /* Two columns under the logo: left preview, right actions */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: start;
+      justify-items: center;
+      width: min(1100px, 92vw);
+      margin: 8px auto 0;
+      overflow: visible; /* belt-and-braces against stray bars */
+    }
+    /* Left column */
+    .character-block {
+      display: grid;
+      justify-items: center;
+      gap: 14px;
+      overflow: visible;
+    }
+    .character-image-frame {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.45), rgba(255,255,255,0));
+      box-shadow: 0 4px 22px rgba(0,0,0,.25), 0 0 0 6px #fff;
+    }
+    .character-image-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+    }
+    .custom-select-wrapper { width: 260px; max-width: 80vw; }
+    .custom-select-wrapper select {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(0,0,0,.15);
+      background: #fff;
+      font: 600 16px/1.2 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    /* Right column */
+    .main-actions {
+      display: grid;
+      gap: 12px;
+      justify-items: start;
+      overflow: visible;
+    }
+    /* Responsive: stack on small screens */
+    @media (max-width: 900px) {
+      .menu-grid { grid-template-columns: 1fr; }
+      .main-actions { justify-items: center; }
+    }
+
+    /* Make sure modal dialog itself isn't forcing inner scrollbars */
+    .modal .dialog { overflow: visible; }
+  </style>
 </head>
 <body>
 <div class="app">
@@ -44,95 +118,100 @@
 
 <!-- Start Modal -->
 <div class="modal open" id="startModal" role="dialog" aria-modal="true">
-    <div class="dialog main-menu">
-        <img src="assets/cyberteurs.png" alt="Cyber Traitors" class="main-logo">
+  <div class="dialog main-menu">
+    <img src="assets/cyberteurs.png" alt="Cyber Traitors" class="main-logo">
 
-        <div class="character-display-container">
-            <div class="character-image-frame">
-                <img id="character-preview-image" src="assets/pngs/al-consultant-1.png" alt="Selected character preview">
-            </div>
-            <div class="custom-select-wrapper">
-                <select id="playerSelect"></select>
-            </div>
+    <!-- New two-column layout under the logo -->
+    <div class="menu-grid">
+      <!-- LEFT: character preview + dropdown -->
+      <div class="character-block">
+        <div class="character-image-frame">
+          <img id="character-preview-image" src="assets/pngs/al-consultant-1.png" alt="Selected character preview">
         </div>
+        <div class="custom-select-wrapper">
+          <label for="playerSelect" class="sr-only">Choose character</label>
+          <select id="playerSelect"></select>
+        </div>
+      </div>
 
-        <div class="main-actions">
-            <button id="startGameBtn" class="btn btn-main">Start Game</button>
-            <button id="howToPlayBtn" class="btn btn-sub">How to Play</button>
-            <button id="optionsBtn" class="btn btn-sub">Options</button>
-        </div>
+      <!-- RIGHT: actions -->
+      <nav class="main-actions">
+        <button id="startGameBtn" class="btn btn-main">Start Game</button>
+        <button id="howToPlayBtn" class="btn btn-sub">How to Play</button>
+        <button id="optionsBtn" class="btn btn-sub">Options</button>
+      </nav>
     </div>
+  </div>
 </div>
 
 <!-- Info Modal -->
 <div class="modal" id="infoModal" role="dialog" aria-modal="true">
-    <div class="dialog">
-        <h2 style="margin-top:0">About The Cyber Traitors</h2>
-        <p>Game prototype made by Frazer MacRobert, Employee Engagement Consultant at scarlettabbott. Get in touch for more information, or to build your own custom training game for your organisation.</p>
-        <div class="footer" style="display:flex;justify-content:flex-end;align-items:center">
-            <button id="closeInfoBtn" class="btn">Close</button>
-        </div>
+  <div class="dialog">
+    <h2 style="margin-top:0">About The Cyber Traitors</h2>
+    <p>Game prototype made by Frazer MacRobert, Employee Engagement Consultant at scarlettabbott. Get in touch for more information, or to build your own custom training game for your organisation.</p>
+    <div class="footer" style="display:flex;justify-content:flex-end;align-items:center">
+      <button id="closeInfoBtn" class="btn">Close</button>
     </div>
+  </div>
 </div>
 
 <button id="infoBtn" class="info-btn">i</button>
 
 <!-- Options Modal -->
 <div class="modal" id="optionsModal" role="dialog" aria-modal="true">
-    <div class="dialog">
-        <h2 style="margin-top:0">Options</h2>
-        <div class="row" style="display:flex;gap:10px;flex-wrap:wrap">
-            <label>Difficulty<br>
-                <select id="difficulty">
-                    <option>Easy</option>
-                    <option selected>Medium</option>
-                    <option>Hard</option>
-                </select>
-            </label>
-            <label>Traitors<br>
-                <select id="numTraitors">
-                    <option>1</option>
-                    <option>2</option>
-                    <option selected>3</option>
-                    <option>4</option>
-                </select>
-            </label>
-            <label>Analysis Mode<br>
-                <select id="analysisMode">
-                    <option value="true" selected>On</option>
-                    <option value="false">Off</option>
-                </select>
-                <div class="note">Turn this on to help you learn.</div>
-            </label>
-        </div>
-        <hr>
-        <div class="footer" style="display:flex;justify-content:flex-end;align-items:center">
-            <button id="confirmOptionsBtn" class="btn">Confirm Settings</button>
-        </div>
+  <div class="dialog">
+    <h2 style="margin-top:0">Options</h2>
+    <div class="row" style="display:flex;gap:10px;flex-wrap:wrap">
+      <label>Difficulty<br>
+        <select id="difficulty">
+          <option>Easy</option>
+          <option selected>Medium</option>
+          <option>Hard</option>
+        </select>
+      </label>
+      <label>Traitors<br>
+        <select id="numTraitors">
+          <option>1</option>
+          <option>2</option>
+          <option selected>3</option>
+          <option>4</option>
+        </select>
+      </label>
+      <label>Analysis Mode<br>
+        <select id="analysisMode">
+          <option value="true" selected>On</option>
+          <option value="false">Off</option>
+        </select>
+        <div class="note">Turn this on to help you learn.</div>
+      </label>
     </div>
+    <hr>
+    <div class="footer" style="display:flex;justify-content:flex-end;align-items:center">
+      <button id="confirmOptionsBtn" class="btn">Confirm Settings</button>
+    </div>
+  </div>
 </div>
 
 <!-- How to Play Modal -->
 <div class="modal" id="howToPlayModal" role="dialog" aria-modal="true">
-    <div class="dialog">
-        <h2 style="margin-top:0">How to Play</h2>
-        <div class="instructions" style="margin-bottom:12px;">
-            <p style="font-size:14px; line-height:1.4; color:var(--muted);">
-                Each day, you’ll face a workplace scenario.<br>
-                1️⃣ <strong>Pick the safest choice</strong> — avoid risky behaviour.<br>
-                2️⃣ Unsafe behaviour means instant <strong>elimination</strong>.<br>
-                3️⃣ Stay safe to see what everyone else did.<br>
-                4️⃣ <strong>Vote off the player you suspect</strong> of sabotage.<br>
-                5️⃣ Keep going until all traitors are gone (win) or they take over (lose).<br>
-                <em>If votes tie, the group decides automatically.</em>
-            </p>
-        </div>
-        <div class="footer" style="display:flex;justify-content:flex-end;align-items:center">
-            <button id="closeRulesBtn" class="btn">Close Rules</button>
-        </div>
+  <div class="dialog">
+    <h2 style="margin-top:0">How to Play</h2>
+    <div class="instructions" style="margin-bottom:12px;">
+      <p style="font-size:14px; line-height:1.4; color:var(--muted);">
+        Each day, you’ll face a workplace scenario.<br>
+        1️⃣ <strong>Pick the safest choice</strong> — avoid risky behaviour.<br>
+        2️⃣ Unsafe behaviour means instant <strong>elimination</strong>.<br>
+        3️⃣ Stay safe to see what everyone else did.<br>
+        4️⃣ <strong>Vote off the player you suspect</strong> of sabotage.<br>
+        5️⃣ Keep going until all traitors are gone (win) or they take over (lose).<br>
+        <em>If votes tie, the group decides automatically.</em>
+      </p>
     </div>
+    <div class="footer" style="display:flex;justify-content:flex-end;align-items:center">
+      <button id="closeRulesBtn" class="btn">Close Rules</button>
+    </div>
+  </div>
 </div>
-
 
 <!-- Fullscreen background for the start screen; fades out when #startModal closes -->
 <div class="start-bg" aria-hidden="true"></div>
