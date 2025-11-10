@@ -44,34 +44,38 @@
 
 <!-- Start Modal -->
 <div class="modal open" id="startModal" role="dialog" aria-modal="true">
-  <div class="dialog main-menu">
-    <img src="assets/cyberteurs.png" alt="Cyber Traitors" class="main-logo">
-    <button id="startGameBtn" class="btn btn-main">Start Game</button>
-    <div class="button-row">
-      <button id="howToPlayBtn" class="btn btn-sub">How to Play</button>
-      <button id="selectCharacterBtn" class="btn btn-sub">Select Character</button>
-      <button id="optionsBtn" class="btn btn-sub">Options</button>
+    <div class="dialog main-menu">
+        <img src="assets/cyberteurs.png" alt="Cyber Traitors" class="main-logo">
+
+        <div class="character-display-container">
+            <div class="character-image-frame">
+                <img id="character-preview-image" src="assets/pngs/al-consultant-1.png" alt="Selected character preview">
+            </div>
+            <div class="custom-select-wrapper">
+                <select id="playerSelect"></select>
+            </div>
+        </div>
+
+        <div class="main-actions">
+            <button id="startGameBtn" class="btn btn-main">Start Game</button>
+            <button id="howToPlayBtn" class="btn btn-sub">How to Play</button>
+            <button id="optionsBtn" class="btn btn-sub">Options</button>
+        </div>
     </div>
-  </div>
 </div>
 
-<!-- Character Selection Modal -->
-<div class="modal" id="characterModal" role="dialog" aria-modal="true">
+<!-- Info Modal -->
+<div class="modal" id="infoModal" role="dialog" aria-modal="true">
     <div class="dialog">
-        <h2 style="margin-top:0">Select Character</h2>
-        <div class="character-selection">
-            <div class="character-list">
-                <select id="playerSelect" size="10"></select>
-            </div>
-            <div class="character-preview">
-                    <img id="character-preview-image" src="assets/pngs/al-consultant-1.png" alt="Selected character preview">
-            </div>
-        </div>
+        <h2 style="margin-top:0">About The Cyber Traitors</h2>
+        <p>Game prototype made by Frazer MacRobert, Employee Engagement Consultant at scarlettabbott. Get in touch for more information, or to build your own custom training game for your organisation.</p>
         <div class="footer" style="display:flex;justify-content:flex-end;align-items:center">
-            <button id="confirmCharacterBtn" class="btn">Confirm Selection</button>
+            <button id="closeInfoBtn" class="btn">Close</button>
         </div>
     </div>
 </div>
+
+<button id="infoBtn" class="info-btn">i</button>
 
 <!-- Options Modal -->
 <div class="modal" id="optionsModal" role="dialog" aria-modal="true">
