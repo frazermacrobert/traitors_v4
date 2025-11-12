@@ -489,12 +489,57 @@ hr{ border:none; border-top:1px solid var(--rail); margin:12px 0; }
 @media (max-width: 900px) {
   #startModal .dialog.main-menu {
     grid-template-columns: 1fr;
-    justify-content: center;
+   justify-content: center;
     align-items: start;
     max-width: min(92vw, 560px);
+    margin-top: 2vh; /* Give a bit of space from the top */
+    padding-bottom: 20px;
   }
   #startModal .dialog.main-menu .main-actions {
     width: min(320px, 90vw);
     justify-self: center;
+  }
+}
+
+/* Horizontal mobile: compact side-by-side layout */
+@media (max-height: 500px) and (orientation: landscape) {
+  #startModal .dialog.main-menu {
+    grid-template-columns: auto auto; /* Two columns, auto-sized */
+    gap: 20px;
+    align-items: center;
+    padding: 10px; /* Reduce padding */
+    margin: 1vh auto;
+  }
+
+  #startModal .dialog.main-menu .main-logo {
+    display: none; /* Hide logo to save critical vertical space */
+  }
+
+  .character-display-container {
+    gap: 8px; /* Reduce gap */
+  }
+
+  .character-image-frame {
+    width: 120px; /* Smaller avatar */
+    height: 120px;
+  }
+
+  .custom-select-wrapper {
+    width: 200px; /* Smaller select */
+  }
+
+  #startModal .dialog.main-menu .main-actions {
+    gap: 8px; /* Tighter buttons */
+    width: auto;
+  }
+
+  .main-actions .btn {
+    padding: 10px 16px; /* Smaller buttons */
+    font-size: 14px;
+  }
+
+  .main-actions .btn-main {
+    padding: 12px 20px;
+    font-size: 16px;
   }
 }
