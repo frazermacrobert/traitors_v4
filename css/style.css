@@ -433,20 +433,23 @@ hr{ border:none; border-top:1px solid var(--rail); margin:12px 0; }
 
 /* === Start menu layout fix: centered two-column layout under the logo === */
 #startModal .dialog.main-menu {
-  display: grid;                       /* replace the old flex column */
-  grid-template-columns: 420px 300px;  /* preview left, buttons right */
-  justify-content: center;             /* center the pair as a unit */
-  align-items: center;                  /* vertical alignment between columns */
+  display: grid;
+  grid-template-columns: 420px 300px;
+  justify-content: center;
+  align-items: center;
   column-gap: 40px;
   row-gap: 20px;
-  padding-bottom: 50px;
+  padding: 2vh 20px; /* Vertical padding to keep space from edges */
   background: transparent;
   box-shadow: none;
   border: none;
-  overflow: visible;
+  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: 95vh; /* Ensure it fits vertically */
   max-width: 980px;
-  margin: 6vh auto;
+  margin: auto; /* Center in the modal flex container */
+  overflow-y: auto;
 }
+
 
 /* Logo spans both columns and stays centered */
 #startModal .dialog.main-menu .main-logo {
@@ -489,17 +492,20 @@ hr{ border:none; border-top:1px solid var(--rail); margin:12px 0; }
 @media (max-width: 900px) {
   #startModal .dialog.main-menu {
     grid-template-columns: 1fr;
-   justify-content: center;
+    justify-content: center;
     align-items: start;
     max-width: min(92vw, 560px);
-    margin-top: 2vh; /* Give a bit of space from the top */
-    padding-bottom: 20px;
+    margin-top: 0;
+    padding: 20px;
+    max-height: 90vh; /* Allow scrolling on tall, narrow screens */
+    overflow-y: auto;
   }
   #startModal .dialog.main-menu .main-actions {
     width: min(320px, 90vw);
     justify-self: center;
   }
 }
+
 
 /* Horizontal mobile: compact side-by-side layout */
 @media (max-height: 500px) and (orientation: landscape) {
@@ -509,7 +515,10 @@ hr{ border:none; border-top:1px solid var(--rail); margin:12px 0; }
     align-items: center;
     padding: 10px; /* Reduce padding */
     margin: 1vh auto;
+    overflow-y: auto; /* Ensure scrolling is possible */
+    max-height: 95vh;
   }
+
 
   #startModal .dialog.main-menu .main-logo {
     display: none; /* Hide logo to save critical vertical space */

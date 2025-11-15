@@ -14,7 +14,7 @@ async def main():
         # Force the selection using evaluate to bypass visibility checks
         await page.evaluate('document.getElementById("playerSelect").value = "frazer-consultant-1"')
 
-        await page.click("#startBtn")
+        await page.click("#startGameBtn")
 
         await page.wait_for_selector('input[name="scopt"]')
 
