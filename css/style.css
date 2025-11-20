@@ -167,6 +167,10 @@ body[data-game-ready='true'] {
     width: 200px;
 }
 
+.custom-select-wrapper label {
+  color: #fff;
+}
+
 #playerSelect {
     appearance: none;
     -webkit-appearance: none;
