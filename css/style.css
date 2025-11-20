@@ -130,12 +130,6 @@ body[data-game-ready='true'] {
 .modal.open{ display:flex; }
 
 #startModal .dialog {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    padding-bottom: 50px;
     background: transparent;
     box-shadow: none;
     border: none;
@@ -195,12 +189,20 @@ body[data-game-ready='true'] {
     pointer-events: none;
 }
 
+.main-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
 .main-actions {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    margin-left: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
 }
 
 .btn-main {
@@ -249,8 +251,6 @@ body[data-game-ready='true'] {
   border-radius:16px;
   padding:20px;
   width: min(640px, 92vw);    /* keep it compact */
-  max-height: 85vh;           /* avoid overflowing small screens */
-  overflow: auto;
   box-shadow:0 30px 80px rgba(0,0,0,.35);
 }
 .dialog .close{ float:right; }
@@ -431,124 +431,3 @@ hr{ border:none; border-top:1px solid var(--rail); margin:12px 0; }
   }
 }
 
-/* === Start menu layout fix: centered two-column layout under the logo === */
-#startModal .dialog.main-menu {
-  display: grid;
-  grid-template-columns: 420px 300px;
-  justify-content: center;
-  align-items: center;
-  column-gap: 40px;
-  row-gap: 20px;
-  padding: 2vh 20px; /* Vertical padding to keep space from edges */
-  background: transparent;
-  box-shadow: none;
-  border: none;
-  overflow-y: auto; /* Enable vertical scrolling */
-  max-height: 95vh; /* Ensure it fits vertically */
-  max-width: 980px;
-  margin: auto; /* Center in the modal flex container */
-  overflow-y: auto;
-}
-
-
-/* Logo spans both columns and stays centered */
-#startModal .dialog.main-menu .main-logo {
-  grid-column: 1 / -1;
-  justify-self: center;
-  max-width: 500px;
-  margin-bottom: .5rem;
-}
-
-/* Left column: hug the left edge so the pair feels balanced */
-#startModal .dialog.main-menu .character-display-container {
-  justify-self: start;
-  gap: 10px;
-}
-
-/* Right column: tidy, consistent width and no stray margins */
-#startModal .dialog.main-menu .main-actions {
-  justify-self: start;
-  align-self: center;
-  display: grid;
-  gap: 12px;
-  width: 300px;
-  margin-left: 0;
-}
-
-/* Label legibility on dark background */
-.custom-select-wrapper label {
-  display: block;
-  margin-bottom: 6px;
-  color: #fff;
-  font-weight: 600;
-  text-align: center;
-  text-shadow: 0 1px 2px rgba(0,0,0,.35);
-}
-
-/* Keep the select close to the label width */
-.custom-select-wrapper { width: 260px; }
-
-/* Mobile: stack neatly */
-@media (max-width: 900px) {
-  #startModal .dialog.main-menu {
-    grid-template-columns: 1fr;
-    justify-content: center;
-    align-items: start;
-    max-width: min(92vw, 560px);
-    margin-top: 0;
-    padding: 20px;
-    max-height: 90vh; /* Allow scrolling on tall, narrow screens */
-    overflow-y: auto;
-  }
-  #startModal .dialog.main-menu .main-actions {
-    width: min(320px, 90vw);
-    justify-self: center;
-  }
-}
-
-
-/* Horizontal mobile: compact side-by-side layout */
-@media (max-height: 500px) and (orientation: landscape) {
-  #startModal .dialog.main-menu {
-    grid-template-columns: auto auto; /* Two columns, auto-sized */
-    gap: 20px;
-    align-items: center;
-    padding: 10px; /* Reduce padding */
-    margin: 1vh auto;
-    overflow-y: auto; /* Ensure scrolling is possible */
-    max-height: 95vh;
-  }
-
-
-  #startModal .dialog.main-menu .main-logo {
-    display: none; /* Hide logo to save critical vertical space */
-  }
-
-  .character-display-container {
-    gap: 8px; /* Reduce gap */
-  }
-
-  .character-image-frame {
-    width: 120px; /* Smaller avatar */
-    height: 120px;
-  }
-
-  .custom-select-wrapper {
-    width: 200px; /* Smaller select */
-  }
-
-  #startModal .dialog.main-menu .main-actions {
-    gap: 8px; /* Tighter buttons */
-    width: auto;
-  }
-
-  .main-actions .btn {
-    padding: 10px 16px; /* Smaller buttons */
-    font-size: 14px;
-  }
-
-  .main-actions .btn-main {
-    padding: 12px 20px;
-    font-size: 16px;
-  }
-}
