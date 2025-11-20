@@ -175,10 +175,10 @@ body[data-game-ready='true'] {
     padding: 10px 40px 10px 15px;
     border: 1px solid var(--rail);
     border-radius: 8px;
-    background-color: #000;
+    background-color: #fff;
     cursor: pointer;
     font-weight: bold;
-    color: #fff; 
+    color: #000; 
 }
 
 .custom-select-wrapper::after {
